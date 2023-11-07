@@ -10,12 +10,15 @@ ifeq ($(notdir $(CC)),clang)
 endif
 endif
 
-all: exploit
+all: compress
 
 exploit: exp.c
-	$(CC) $(CFLAGS) -o initramfs/$@ $^
+	$(CC) $(CFLAGS) -o initramfs/$@ $^ *.o
 
-compress: exploit
+userfault: userfault.c
+	$(CC) $(CFLAGS) -c $^
+
+compress: userfault exploit
 	cd initramfs && \
 	find . -print0 \
 	| cpio --null -ov --format=newc \

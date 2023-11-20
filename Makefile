@@ -18,7 +18,7 @@ exploit: exp.c
 compress: exploit
 	cd initramfs && \
 	find . -print0 \
-	| cpio --null -ov --format=newc \
+	| cpio --null -ov --format=newc -R root \
 	| gzip -9 > initramfs.cpio.gz && \
 	mv ./initramfs.cpio.gz ../
 
